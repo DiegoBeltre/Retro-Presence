@@ -11,7 +11,7 @@ import imagehash
 obs = ReqClient(
     host="localhost",
     port=4455,
-    password="MLyX8iRrNGbGBWRE"
+    password="123456"
 )
 
 def get_frame():
