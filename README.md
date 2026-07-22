@@ -1,213 +1,108 @@
 # Retro Presence
 
-Automatic Discord Rich Presence for retro games using OBS video capture and perceptual image hashing.
+Retro Presence is a Python application that automatically detects the retro game currently displayed in OBS Studio and updates your Discord Rich Presence in real time.
 
-No machine learning.
+Using image hashing, the application compares the current OBS capture against a database of known game screenshots and displays the matching title on your Discord profile.
 
-No game database.
+---
 
-Just screenshots.
+## Features
+
+* 🎮 Automatic retro game detection
+* 📺 OBS Studio integration via WebSocket
+* 💬 Discord Rich Presence support
+* 🖼️ Fast image recognition using perceptual image hashing
+* ⚡ Lightweight and easy to configure
 
 ---
 
 ## Requirements
 
-- Windows
-- Discord Desktop
-- OBS Studio
-- OBS WebSocket
+Before running the application, make sure you have:
+
+* Python 3.14 or newer
+* OBS Studio
+* OBS WebSocket enabled
+* Discord Desktop
 
 ---
 
-## OBS Setup
+## Installation
 
-Retro Presence expects the following OBS configuration:
+Clone the repository:
 
-Source Name:
+```bash
+git clone https://github.com/DiegoBeltre/Retro-Presence.git
+cd Retro-Presence
+```
 
-PS2 Capture
+Create a virtual environment:
 
-WebSocket Settings:
+```bash
+python -m venv .venv
+```
 
-Host: localhost
-Port: 4455
-Password: 123456
+Activate it.
 
-Enable WebSocket:
+### Windows
 
-Tools
-→ WebSocket Server Settings
-→ Enable WebSocket Server
+```bash
+.venv\Scripts\activate
+```
 
-IMPORTANT:
+Install all required dependencies:
 
-The OBS source MUST be named exactly:
+```bash
+pip install -r requirements.txt
+```
 
-PS2 Capture
+---
 
-If the source name is different, Retro Presence will not work.
+## OBS Configuration
+
+Retro Presence communicates with OBS through the OBS WebSocket server.
+
+Before running the application:
+
+1. Open **OBS Studio**.
+2. Navigate to **Tools → WebSocket Server Settings**.
+3. Make sure the WebSocket server is enabled.
+4. Copy your WebSocket password.
+5. Open `Capture.py`.
+6. Replace the password value with your own OBS WebSocket password.
+
+Example:
+
+```python
+password = "YOUR_OBS_WEBSOCKET_PASSWORD"
+```
+
+If the password does not match the one configured in OBS, Retro Presence will be unable to connect.
 
 ---
 
 ## Running
 
-Launch:
+Start the application with:
 
-Retro Presence.exe
-
-or
-
-Main.py
+```bash
+python Main.py
+```
 
 ---
 
-## Adding Games
+## Notes
 
-Place screenshots of the games title screen inside:
-
-LibAssets/
-
-Filename format:
-
-GAME_NAME111CONSOLE.png
-
-Examples:
-
-RESIDENT_EVIL_4111PlayStation 2.png
-
-Final_Fantasy_X111PlayStation 2.png
-
-Destroy_All_Humans111PlayStation 2.png
-
-MonkeyBall111GameCube.png
-
-Gears_of_war111Xbox 360.png
-
-Restart Retro Presence after adding new screenshots.
+* OBS Studio must be running.
+* Discord Desktop must be running.
+* The game must be visible in the configured OBS source.
+* Game detection relies on the included image hash database.
 
 ---
 
-## Filename Parsing
+## Limitations
 
-Example:
+Discord Rich Presence image assets are managed by the Discord application associated with this project.
 
-RESIDENT_EVIL_4111PlayStation 2.png
+While anyone can use or modify the project, only the owner of the Discord application can add or update Rich Presence image assets. Because of this, support for new games requires updates to the Discord application assets in addition to the detection database.
 
-Becomes:
-
-Game:
-Resident Evil 4
-
-Console:
-PlayStation 2
-
-Displayed in Discord:
-
-Resident Evil 4
-PlayStation 2
-
----
-
-## Detection Pipeline
-
-OBS Video Feed
-↓
-Screenshot Capture
-↓
-Perceptual Hash
-↓
-Library Comparison
-↓
-Best Match
-↓
-Discord Rich Presence
-
----
-
-## Library Structure
-
-LibAssets/
-
-├── RESIDENT_EVIL_4111PlayStation 2.png
-
-├── RESIDENT_EVIL_4_MENU111PlayStation 2.png
-
-├── RESIDENT_EVIL_4_CASTLE111PlayStation 2.png
-
-├── Final_Fantasy_X111PlayStation 2.png
-
-├── Destroy_All_Humans111PlayStation 2.png
-
-Multiple screenshots can represent the same game.
-
-Adding more screenshots generally improves detection reliability.
-
----
-
-## Discord Assets
-
-Games with configured Discord assets will display cover art.
-
-Games without configured assets will automatically fall back to the default console icon.
-
----
-
-## Troubleshooting
-
-### OBS Connection Failed
-
-Verify:
-
-- OBS is running
-- WebSocket is enabled
-- Port is 4455
-- Password is 123456
-
-### Source Not Found
-
-Verify the source is named exactly:
-
-PS2 Capture
-
-### Discord Not Updating
-
-Verify:
-
-- Discord Desktop is running
-- Retro Presence.exe is running
-
-### Game Not Detected
-
-Try:
-
-- Adding additional screenshots
-- Using gameplay screenshots
-- Using screenshots with unique UI elements
-- Confirming screenshots are inside LibAssets
-
----
-
-## Supported Sources
-
-- PlayStation 2
-- PSP
-- GameCube
-- Dreamcast
-- Xbox
-- Wii
-- Emulators
-- Capture Cards
-
-If OBS can see it, Retro Presence can attempt to identify it.
-
----
-
-## Built With
-
-- Python
-- OBS WebSocket
-- OpenCV
-- ImageHash
-- PyPresence
-
-Created by Diego Beltre
