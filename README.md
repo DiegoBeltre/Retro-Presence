@@ -83,13 +83,7 @@ If the password does not match the one configured in OBS, Retro Presence will be
 
 ## Running
 
-Start the application with:
-
-```bash
-python Main.py
-```
-
----
+Start the application with Retro Presence.exe
 
 ## Notes
 
