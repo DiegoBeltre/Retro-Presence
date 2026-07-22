@@ -67,10 +67,12 @@ Before running the application:
 1. Open **OBS Studio**.
 2. Navigate to **Tools → WebSocket Server Settings**.
 3. Make sure the WebSocket server is enabled.
-4. Copy your WebSocket password.
-5. Open `Capture.py`.
-6. Replace the password value with your own OBS WebSocket password.
-7. Make sure the capture source in OBS is named PS2 Capture.
+4. You can use your own password or set the WebSocket password to 123456
+5. Make sure the capture source in OBS is named PS2 Capture.
+
+IF YOU USE YOUR OWN PASSWORD
+1. Open `Capture.py`.
+2. Replace the password value with your own OBS WebSocket password.
 
 Example:
 
@@ -78,13 +80,14 @@ Example:
 password = "YOUR_OBS_WEBSOCKET_PASSWORD"
 ```
 
-If the password does not match the one configured in OBS, Retro Presence will be unable to connect.
+If the password does not match the one configured in OBS, Retro Presence will be unable to connect. 
+Note that Retro Presence.exe will break if you use your own password unless you refactor it.
 
 ---
 
 ## Running
 
-Start the application with Retro Presence.exe
+Start the application with Retro Presence.exe or if useing your own password run Main.py
 
 ## Notes
 
