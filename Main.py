@@ -48,7 +48,6 @@ class PresenceTracker:
         self.start_time = int(time())
 
     def update_streak(self, game):
-        """Tracks how many times in a row a game gets the #1 spot."""
         if game == self.last_best_pick:
             self.best_pick_streak += 1
         else:
@@ -61,7 +60,6 @@ class PresenceTracker:
         self.best_pick_streak = 0
 
     def process_frame(self, game, score):
-        """Evaluates the image-matching results against filters and streaks."""
         streak = self.update_streak(game)
 
         if score > THRESHOLDS["CONFIDENCE_MAX"]:
@@ -81,7 +79,6 @@ class PresenceTracker:
             print(f"Building streak: {streak}/{THRESHOLDS['STREAK_OVERRIDE']}s (Score: {score})")
 
     def _update_candidate(self, game):
-        """Tracks game stability confirmations before pushing an update to Discord."""
         if game == self.candidate_game:
             self.candidate_count += 1
         else:
