@@ -70,6 +70,7 @@ Before running the application:
 4. Copy your WebSocket password.
 5. Open `Capture.py`.
 6. Replace the password value with your own OBS WebSocket password.
+7. Make sure the capture source in OBS is named PS2 Capture.
 
 Example:
 
