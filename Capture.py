@@ -34,7 +34,6 @@ def get_frame():
 
     return frame
 
-# Inside Capture.py
 def get_frame_hash():
     frame = get_frame()
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -43,10 +42,7 @@ def get_frame_hash():
     p_hash = imagehash.phash(pil_image)
     d_hash = imagehash.dhash(pil_image)
 
-    # RIGHT: Returns a tuple object containing 2 hash items
     return p_hash, d_hash 
-
-    # WRONG (Check if you have this): return f"{p_hash}_{d_hash}"
 
 if __name__ == "__main__":
 
