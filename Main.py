@@ -3,14 +3,13 @@ from pypresence import Presence
 from Capture import get_frame_hash
 from imghash import build_library, find_best_match
 
-# --- Configuration Constants ---
 CLIENT_ID = "1519389749364654212"
 
 THRESHOLDS = {
-    "MATCH": 35,            # Score <= 35 instantly updates Discord
-    "CONFIDENCE_MAX": 80,   # Discard completely unrelated garbage frames
-    "CONFIRMATIONS": 3,     # Consecutive matches needed to update state
-    "STREAK_OVERRIDE": 8   # Consecutive #1 picks needed to bypass strict match score
+    "MATCH": 35,            
+    "CONFIDENCE_MAX": 80,  
+    "CONFIRMATIONS": 3,    
+    "STREAK_OVERRIDE": 8   
 }
 
 ASSET_KEYS = {
@@ -23,7 +22,6 @@ ASSET_KEYS = {
     "Metal_Gear_Solid_3": "mgs3",
 }
 
-# --- Data Normalization Helpers ---
 def get_console(name):
     return name.split("111")[1] if "111" in name else "Unknown"
 
@@ -35,8 +33,6 @@ def get_asset_key(name):
     base_name = name.split("111")[0] if "111" in name else name
     return ASSET_KEYS.get(base_name, "ps2_logo")
 
-
-# --- Presence Tracking State Engine ---
 class PresenceTracker:
     def __init__(self, client_id):
         self.rpc = Presence(client_id)
@@ -68,13 +64,11 @@ class PresenceTracker:
         """Evaluates the image-matching results against filters and streaks."""
         streak = self.update_streak(game)
 
-        # 1. Early hard drop for completely unreadable frames
         if score > THRESHOLDS["CONFIDENCE_MAX"]:
             print(f"Extreme low confidence ({score} > {THRESHOLDS['CONFIDENCE_MAX']}) - ignoring frame")
             self.reset_streak()
             return
 
-        # 2. Evaluate qualification criteria
         is_strict_match = score <= THRESHOLDS["MATCH"]
         is_streak_exception = streak >= THRESHOLDS["STREAK_OVERRIDE"]
 
@@ -111,8 +105,6 @@ class PresenceTracker:
             )
             print(f"Discord Updated: {display_name} ({console})")
 
-
-# --- Main Execution Runtime ---
 def main():
     library = build_library()
     tracker = PresenceTracker(CLIENT_ID)
@@ -120,12 +112,11 @@ def main():
 
     while True:
         try:
-            # 1. Capture and analyze live game window frames
+
             frame_hashes = get_frame_hash()
             game, score = find_best_match(frame_hashes, library)
             print(f"Detected: {game} | Score: {score}")
 
-            # 2. Pass match properties to tracker engine
             tracker.process_frame(game, score)
             sleep(1)
             
